@@ -1,64 +1,85 @@
-import React from 'react';
+import React from 'react'
+import InputField from "./InputField"
+import TaskList from "./TaskList";
 
-class TaskView extends React.Component {
-    handleClick = () => {
-        console.log(`Task ${this.props.id} completed status = ${this.props.completed}`)
+class App extends React.Component {
+
+    state = {
+        currentId: 0,
+        inputNameValue: '',
+        inputDescriptionValue: '',
+        tasks: []
+    }
+
+    handleNameInput = event => {
+        const { value } = event.target
+        this.setState(currentState => {
+            const newState = {...currentState}
+            newState.inputNameValue = value
+            return newState
+        })
+    }
+
+    handleDescriptionInput = event => {
+        // console.log(this.state)
+        const { value } = event.target
+        this.setState(currentState => {
+            const newState = {...currentState}
+            newState.inputDescriptionValue = value
+            return newState
+        })
+    }
+
+    handleSubmitButton = () => {
+        this.setState( {
+                currentId: this.state.currentId + 1,
+                inputNameValue: '',
+                inputDescriptionValue: '',
+                tasks: this.state.tasks.concat([{
+                    id: this.state.currentId,
+                    name: this.state.inputNameValue,
+                    description: this.state.inputDescriptionValue,
+                    completed: false
+                }])
+            })
+    }
+
+    completionStatusUpdated = (id) => {
+        const updatedElement = this.state.tasks.findIndex(elem => elem.id === id)
+        // console.log(updatedElement)
+        this.setState(currentState => {
+            const newState = {
+                ...currentState,
+                tasks: [...currentState.tasks]
+            }
+            const status = currentState.tasks[updatedElement].completed
+            newState.tasks[updatedElement] = {
+                ...currentState.tasks[updatedElement],
+                completed: !status
+            }
+            //console.log(newState.tasks[updatedElement])
+            return newState
+        })
     }
 
     render() {
         return (
-            <div className="TaskView">
+            <div>
+                <InputField value={this.state.inputNameValue}
+                            placeholder={'Input name of the task'}
+                            onChange={this.handleNameInput}/>
+                <InputField value={this.state.inputDescriptionValue}
+                            placeholder={'Input task description'}
+                            onChange={this.handleDescriptionInput}/>
                 <div>
-                    <h2>{this.props.name}</h2>
+                    <button onClick={this.handleSubmitButton}>Submit</button>
                 </div>
-                <div>
-                    <i>{this.props.description}</i>
-                </div>
-                <div>
-                    Is completed: {this.props.completed ? "YES": "NO"}
-                </div>
-                <button onClick={this.handleClick}>Change completed status</button>
+                <TaskList className='task-list'
+                          tasks={this.state.tasks}
+                          completionHandler={this.completionStatusUpdated}/>
             </div>
         )
-
     }
 }
 
-class MyTodoList extends React.Component {
-    state = {
-        tasks: [
-            {
-                id: 1234,
-                name: "task1",
-                description: "My first task",
-                completed: true
-            },
-            {
-                id: 1223,
-                name: "task2",
-                description: "My second task",
-                completed: true
-            },
-            {
-                id: 228,
-                name: "task3",
-                description: "Todo...",
-                completed: false
-            }
-        ]
-    }
-    render() {
-        return (
-            <ul>
-                    {this.state.tasks.map(
-                        item => <li>
-                                    <TaskView id = {item.id} name = {item.name}
-                                          description={item.description} completed={item.completed}/>
-                                </li>
-                    )}
-            </ul>
-        )
-    }
-}
-
-export default MyTodoList;
+export default App;
