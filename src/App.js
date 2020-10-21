@@ -71,8 +71,8 @@ class App extends React.Component {
                 <InputField value={this.state.inputDescriptionValue}
                             placeholder={'Input task description'}
                             onChange={this.handleDescriptionInput}/>
-                <div>
-                    <button onClick={this.handleSubmitButton}>Submit</button>
+                <div className='submit-button-area'>
+                    <button className='submit-button' onClick={this.handleSubmitButton}>Submit</button>
                 </div>
                 <TaskList className='task-list'
                           tasks={this.state.tasks}

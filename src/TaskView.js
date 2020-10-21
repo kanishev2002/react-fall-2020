@@ -1,17 +1,28 @@
 import React from 'react';
+import './App.css'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 
 class TaskView  extends React.Component{
     render() {
         return (
             <div className="TaskView">
-                <h2>{this.props.name}</h2>
+                <div className='task-name'>{this.props.name}</div>
                 <i>{this.props.description}</i>
                 <div>
-                    Is completed: {this.props.completed ? "YES" : "NO"}
+                    Is completed: {this.props.completed ?
+                        <FontAwesomeIcon className='tick' icon={faCheck}/> :
+                        <FontAwesomeIcon className='cross' icon={faTimes}/>
+                    }
                 </div>
-                <button onClick={() => this.props.completionHandler(this.props.id)}>
-                    Change completed status
-                </button>
+                <div className='submit-button-area'>
+                    <button
+                        onClick={() => this.props.completionHandler(this.props.id)}
+                        className='submit-button'
+                    >
+                        Change completed status
+                    </button>
+                </div>
             </div>
         )
     }
