@@ -2,9 +2,9 @@ import React from 'react';
 
 
 const InputField = ({value, onChange, placeholder}) => (
-    <div>
+    <div className='input-field'>
         <input
-            className='input-field'
+            className='input-border'
             value={value}
             onChange={onChange}
             placeholder={placeholder}
