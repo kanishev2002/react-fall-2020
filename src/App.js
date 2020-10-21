@@ -1,24 +1,5 @@
 import React from 'react';
 
-/*class Counter extends React.Component {
-  state = {
-    numberOfTimes: 0
-  }
-
-  handleClick = () => {
-    this.setState({numberOfTimes: this.state.numberOfTimes + 1})
-  }
-  render() {
-      return (
-          <div className="app">
-              <button onClick={this.handleClick}>Number: {this.state.numberOfTimes}</button>
-          </div>
-      )
-  }
-}*/
-
-
-
 class TaskView extends React.Component {
     handleClick = () => {
         console.log(`Task ${this.props.id} completed status = ${this.props.completed}`)
