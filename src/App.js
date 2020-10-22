@@ -1,26 +1,64 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class TaskView extends React.Component {
+    handleClick = () => {
+        console.log(`Task ${this.props.id} completed status = ${this.props.completed}`)
+    }
+
+    render() {
+        return (
+            <div className="TaskView">
+                <div>
+                    <h2>{this.props.name}</h2>
+                </div>
+                <div>
+                    <i>{this.props.description}</i>
+                </div>
+                <div>
+                    Is completed: {this.props.completed ? "YES": "NO"}
+                </div>
+                <button onClick={this.handleClick}>Change completed status</button>
+            </div>
+        )
+
+    }
 }
 
-export default App;
+class MyTodoList extends React.Component {
+    state = {
+        tasks: [
+            {
+                id: 1234,
+                name: "task1",
+                description: "My first task",
+                completed: true
+            },
+            {
+                id: 1223,
+                name: "task2",
+                description: "My second task",
+                completed: true
+            },
+            {
+                id: 228,
+                name: "task3",
+                description: "Todo...",
+                completed: false
+            }
+        ]
+    }
+    render() {
+        return (
+            <ul>
+                    {this.state.tasks.map(
+                        item => <li>
+                                    <TaskView id = {item.id} name = {item.name}
+                                          description={item.description} completed={item.completed}/>
+                                </li>
+                    )}
+            </ul>
+        )
+    }
+}
+
+export default MyTodoList;
