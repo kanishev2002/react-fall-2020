@@ -1,0 +1,47 @@
+$offWhite: rgb(225, 225, 235);
+$blackShadow: rgba(0, 0, 0, 0.2);
+$whiteShadow: rgba(255, 255, 255, 0.7);
+
+.app {
+  display: flex;
+  flex-direction: row;
+}
+
+.appHeader {
+  font-size: x-large;
+  font-family: "Helvetica Neue";
+  text-shadow: 5px 4px 3px lightgray;
+}
+
+.inputFields {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: $offWhite;
+  height: 80px;
+  align-items: center;
+  box-shadow: 10px 10px 10px $blackShadow;
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  flex: 4;
+}
+
+.submit-button {
+  padding: 5px;
+  border-radius: 20px;
+  border-width: 0;
+  //border-color: gray;
+  color: black;
+  background: $offWhite;
+  box-shadow: 10px 10px 10px $blackShadow, -10px -3px 10px $whiteShadow;
+  &:active {
+    box-shadow: none;
+    border-width: 1px;
+    border-color: whitesmoke;
+  }
+}

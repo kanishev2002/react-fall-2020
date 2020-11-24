@@ -1,10 +1,13 @@
-import React from 'react';
+import React from 'react'
+import styles from './inputField.module.scss'
+import classnames from 'classnames/bind'
 
+const cx = classnames.bind(styles)
 
 const InputField = ({value, onChange, placeholder}) => (
-    <div className='input-field'>
+    <div className={cx('inputField')}>
         <input
-            className='input-border'
+            className={cx('inputBorder')}
             value={value}
             onChange={onChange}
             placeholder={placeholder}

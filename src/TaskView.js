@@ -1,28 +1,29 @@
-import React from 'react';
-import './App.css'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
+import React from 'react'
+import styles from './taskView.module.scss'
+import classnames from 'classnames/bind'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCircle as circleFill} from '@fortawesome/free-solid-svg-icons'
+import {faCircle as circle} from'@fortawesome/free-regular-svg-icons'
 
-class TaskView  extends React.Component{
+const cx = classnames.bind(styles);
+
+class TaskView extends React.Component {
     render() {
         return (
-            <div className="TaskView">
-                <div className='task-name'>{this.props.name}</div>
-                <i>{this.props.description}</i>
-                <div>
-                    Is completed: {this.props.completed ?
-                        <FontAwesomeIcon className='tick' icon={faCheck}/> :
-                        <FontAwesomeIcon className='cross' icon={faTimes}/>
-                    }
-                </div>
-                <div className='submit-button-area'>
-                    <button
-                        onClick={() => this.props.completionHandler(this.props.id)}
-                        className='submit-button'
-                    >
-                        Change completed status
+            <div>
+                <div className={cx("taskView")}>
+                    <button onClick={() => this.props.completionHandler(this.props.id)}
+                            className={cx('taskCompletionButton')}>
+                        {this.props.completed ?
+                        <FontAwesomeIcon icon={circleFill} className={cx('completedTask')}/> :
+                        <FontAwesomeIcon icon={circle} className={cx('incompleteTask')}/>}
                     </button>
+                    <div className={cx('task')}>
+                        <div className={cx('taskName')}>{this.props.name}</div>
+                        <div className={cx('taskDescription')}>{this.props.description}</div>
+                    </div>
                 </div>
+                <hr className={cx('hr')}/>
             </div>
         )
     }
