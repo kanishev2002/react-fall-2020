@@ -1,6 +1,10 @@
 import React from 'react'
 import InputField from "./InputField"
 import TaskList from "./TaskList";
+import classnames from 'classnames/bind'
+import styles from './app.module.scss'
+
+const cx = classnames.bind(styles)
 
 class App extends React.Component {
 
@@ -12,7 +16,7 @@ class App extends React.Component {
     }
 
     handleNameInput = event => {
-        const { value } = event.target
+        const {value} = event.target
         this.setState(currentState => {
             const newState = {...currentState}
             newState.inputNameValue = value
@@ -22,16 +26,18 @@ class App extends React.Component {
 
     handleDescriptionInput = event => {
         // console.log(this.state)
-        const { value } = event.target
+        const {value} = event.target
         this.setState(currentState => {
             const newState = {...currentState}
             newState.inputDescriptionValue = value
             return newState
         })
+
     }
 
     handleSubmitButton = () => {
-        this.setState( {
+        if(this.state.inputNameValue!=='') {
+            this.setState({
                 currentId: this.state.currentId + 1,
                 inputNameValue: '',
                 inputDescriptionValue: '',
@@ -42,11 +48,12 @@ class App extends React.Component {
                     completed: false
                 }])
             })
+        }
     }
 
     completionStatusUpdated = (id) => {
+        console.log('completion status updated')
         const updatedElement = this.state.tasks.findIndex(elem => elem.id === id)
-        // console.log(updatedElement)
         this.setState(currentState => {
             const newState = {
                 ...currentState,
@@ -57,27 +64,39 @@ class App extends React.Component {
                 ...currentState.tasks[updatedElement],
                 completed: !status
             }
-            //console.log(newState.tasks[updatedElement])
             return newState
         })
     }
 
     render() {
         return (
-            <div>
-                <InputField value={this.state.inputNameValue}
-                            placeholder={'Input name of the task'}
-                            onChange={this.handleNameInput}/>
-                <InputField value={this.state.inputDescriptionValue}
-                            placeholder={'Input task description'}
-                            onChange={this.handleDescriptionInput}/>
-                <div className='submit-button-area'>
-                    <button className='submit-button' onClick={this.handleSubmitButton}>Submit</button>
+            <>
+                <div className={cx('appHeader')}>
+                    <h1> TODO List </h1>
                 </div>
-                <TaskList className='task-list'
-                          tasks={this.state.tasks}
-                          completionHandler={this.completionStatusUpdated}/>
-            </div>
+                <div className={cx('app')}>
+                    <div className={cx('taskList')}>
+                        <TaskList
+                            tasks={this.state.tasks}
+                            completionHandler={this.completionStatusUpdated}/>
+                    </div>
+                    <div className={cx('inputFields')}>
+                        <InputField value={this.state.inputNameValue}
+                                    placeholder={'Input name of the task'}
+                                    onChange={this.handleNameInput}/>
+                        <InputField value={this.state.inputDescriptionValue}
+                                    placeholder={'Input task description'}
+                                    onChange={this.handleDescriptionInput}/>
+                        <div className='submit-button-area'>
+                            <button
+                                className={cx('submit-button')}
+                                onClick={this.handleSubmitButton}>
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </>
         )
     }
 }
